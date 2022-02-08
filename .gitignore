@@ -1,0 +1,13 @@
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build
+
+# Ignore IntelliJ IDEA workspace artifacts
+.idea
+*.iml
+
+# Ignore IntelliJ IDEA build output directory
+out
+
