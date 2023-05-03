@@ -25,7 +25,7 @@ public class AddFractionsTest {
         }
 
         public Fraction plus(Fraction fraction) {
-            return this;
+            return new Fraction(integerValue);
         }
 
         public int intValue() {
