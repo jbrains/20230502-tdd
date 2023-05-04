@@ -67,5 +67,21 @@ public class AddFractionsTest {
         public int getDenominator() {
             return denominator;
         }
+
+        @Override
+        public boolean equals(Object other) {
+            if (other instanceof Fraction) {
+                Fraction that = (Fraction) other;
+                return this.numerator == that.numerator
+                        && this.denominator == that.denominator;
+            } else {
+                return false;
+            }
+        }
+
+        @Override
+        public int hashCode() {
+            return -762;
+        }
     }
 }
