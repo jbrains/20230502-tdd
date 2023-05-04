@@ -54,18 +54,6 @@ public class AddFractionsTest {
                 return new Fraction(this.numerator + that.numerator);
         }
 
-        public int intValue() {
-            return numerator;
-        }
-
-        public int getNumerator() {
-            return numerator;
-        }
-
-        public int getDenominator() {
-            return denominator;
-        }
-
         @Override
         public boolean equals(Object other) {
             if (other instanceof Fraction) {
