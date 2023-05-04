@@ -8,24 +8,28 @@ public class AddFractionsTest {
     void zeroPlusZero() {
         Fraction sum = new Fraction(0).plus(new Fraction(0));
         Assertions.assertEquals(0, sum.intValue());
+        Assertions.assertEquals(new Fraction(0), sum);
     }
 
     @Test
     void notZeroPlusZero() {
         Fraction sum = new Fraction(4).plus(new Fraction(0));
         Assertions.assertEquals(4, sum.intValue());
+        Assertions.assertEquals(new Fraction(4), sum);
     }
 
     @Test
     void zeroPlusNotZero() {
         Fraction sum = new Fraction(0).plus(new Fraction(7));
         Assertions.assertEquals(7, sum.intValue());
+        Assertions.assertEquals(new Fraction(7), sum);
     }
 
     @Test
     void notZeroPlusNotZero() {
         Fraction sum = new Fraction(3).plus(new Fraction(9));
         Assertions.assertEquals(12, sum.intValue());
+        Assertions.assertEquals(new Fraction(12), sum);
     }
 
     @Test
@@ -34,6 +38,7 @@ public class AddFractionsTest {
 
         Assertions.assertEquals(3, sum.getNumerator());
         Assertions.assertEquals(5, sum.getDenominator());
+        Assertions.assertEquals(new Fraction(3, 5), sum);
     }
 
     public static class Fraction {
