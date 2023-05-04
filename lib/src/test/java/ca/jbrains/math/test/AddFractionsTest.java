@@ -34,6 +34,12 @@ public class AddFractionsTest {
         Assertions.assertEquals(new Fraction(3, 5), sum);
     }
 
+    @Test
+    void coprimeDenominators() {
+        Fraction sum = new Fraction(2, 7).plus(new Fraction(3, 4));
+        Assertions.assertEquals(new Fraction(29, 28), sum);
+    }
+
     public static class Fraction {
         private int numerator;
         private int denominator;
@@ -50,6 +56,10 @@ public class AddFractionsTest {
         public Fraction plus(Fraction that) {
             if (denominator != 1 && this.denominator == that.denominator)
                 return new Fraction(this.numerator + that.numerator, this.denominator);
+            else if (denominator != 1 && this.denominator != that.denominator)
+                return new Fraction(
+                        this.numerator * that.denominator + this.denominator * that.numerator,
+                        this.denominator * that.denominator);
             else
                 return new Fraction(this.numerator + that.numerator);
         }
@@ -68,6 +78,11 @@ public class AddFractionsTest {
         @Override
         public int hashCode() {
             return -762;
+        }
+
+        @Override
+        public String toString() {
+            return "%d/%d".formatted(numerator, denominator);
         }
     }
 }
