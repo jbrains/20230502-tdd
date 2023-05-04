@@ -54,22 +54,21 @@ public class AddFractionsTest {
         }
 
         public Fraction plus(Fraction that) {
-            if (denominator != 1 && this.denominator == that.denominator)
+            if (denominator == 1)
+                return new Fraction(this.numerator + that.numerator);
+            else if (this.denominator == that.denominator)
                 return new Fraction(this.numerator + that.numerator, this.denominator);
-            else if (denominator != 1 && this.denominator != that.denominator)
+            else
                 return new Fraction(
                         this.numerator * that.denominator + this.denominator * that.numerator,
                         this.denominator * that.denominator);
-            else
-                return new Fraction(this.numerator + that.numerator);
         }
 
         @Override
         public boolean equals(Object other) {
             if (other instanceof Fraction) {
                 Fraction that = (Fraction) other;
-                return this.numerator == that.numerator
-                        && this.denominator == that.denominator;
+                return this.numerator * that.denominator == that.numerator * this.denominator;
             } else {
                 return false;
             }
