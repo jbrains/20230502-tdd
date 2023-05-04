@@ -42,16 +42,18 @@ public class AddFractionsTest {
         private int integerValue;
 
         public Fraction(int integerValue) {
+            this(integerValue, 1);
             this.integerValue = integerValue;
         }
 
         public Fraction(int numerator, int denominator) {
+            this.integerValue = numerator;
             this.numerator = numerator;
             this.denominator = denominator;
         }
 
         public Fraction plus(Fraction that) {
-            if (denominator != 0 && this.denominator == that.denominator)
+            if (denominator != 1 && this.denominator == that.denominator)
                 return new Fraction(this.numerator + that.numerator, this.denominator);
             else
                 return new Fraction(this.integerValue + that.integerValue);
