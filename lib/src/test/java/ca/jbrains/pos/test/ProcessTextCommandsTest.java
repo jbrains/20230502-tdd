@@ -13,11 +13,9 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 public class ProcessTextCommandsTest {
-    // Test List:
-    // - happy path, process lines until the stream ends.
-    //    - 1 command
-    //    - 0 commands
-    //    - many commands
+    // Now, in order to remove more newlines, I think it would be wise to eliminate
+    // the Reader and Writer and instead focus on processing Streams of text!
+    // Abstraction! :)
 
     @Test
     void oneCommand() {
