@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -50,7 +51,11 @@ public class ProcessTextCommandsTest {
                 "command 2", "output from command 2",
                 "command 3", "output from command 3"));
 
-        Assertions.assertEquals("output from command 1\noutput from command 2\noutput from command 3\n", canvas.toString());
+        Assertions.assertEquals(lines("output from command 1\noutput from command 2\noutput from command 3\n"), lines(canvas.toString()));
+    }
+
+    private List<String> lines(String multilineText) {
+        return new BufferedReader(new StringReader(multilineText)).lines().toList();
     }
 
     private void process(StringReader textInput, StringWriter canvas, Map<String, String> commandInterpreter) {
