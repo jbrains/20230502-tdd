@@ -67,6 +67,6 @@ public class ProcessTextCommandsTest {
 
         final Stream<String> textInputAsLines = new BufferedReader(textInput).lines();
 
-        textInputAsLines.map(line -> line).forEachOrdered(line -> out.println(commandInterpreter.get(line)));
+        textInputAsLines.map(line -> commandInterpreter.get(line)).forEachOrdered(outputLine -> out.println(outputLine));
     }
 }
