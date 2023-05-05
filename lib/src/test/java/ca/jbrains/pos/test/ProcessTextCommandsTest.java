@@ -13,18 +13,20 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 public class ProcessTextCommandsTest {
-    // Maybe we should split this behavior into two clear parts:
-    // 1. Text UI loop
-    // 2. Interpret Commands in memory
+    // These tests no longer worry about _how_ to interpret commands,
+    // but instead only about how to use a Command Interpreter.
+    // Now we can focus on interpreting text commands in a way that
+    // matches the interface of LightweightCommandInterpreter.
 
     @Test
     void oneCommand() {
         final StringReader simulatedTextInput = new StringReader("command 1\n");
         final StringWriter canvas = new StringWriter();
 
-        process(simulatedTextInput, canvas, Map.of("command 1", "output from command 1",
-                "command 2", "output from command 2",
-                "command 3", "output from command 3"));
+        process(simulatedTextInput, canvas, new LightweightCommandInterpreter(
+                Map.of("command 1", "output from command 1",
+                        "command 2", "output from command 2",
+                        "command 3", "output from command 3")));
 
         Assertions.assertEquals(List.of("output from command 1"), lines(canvas.toString()));
     }
@@ -34,9 +36,10 @@ public class ProcessTextCommandsTest {
         final StringReader simulatedTextInput = new StringReader("");
         final StringWriter canvas = new StringWriter();
 
-        process(simulatedTextInput, canvas, Map.of("command 1", "output from command 1",
-                "command 2", "output from command 2",
-                "command 3", "output from command 3"));
+        process(simulatedTextInput, canvas, new LightweightCommandInterpreter(
+                Map.of("command 1", "output from command 1",
+                        "command 2", "output from command 2",
+                        "command 3", "output from command 3")));
 
         Assertions.assertEquals(Collections.emptyList(), lines(canvas.toString()));
     }
@@ -46,9 +49,10 @@ public class ProcessTextCommandsTest {
         final StringReader simulatedTextInput = new StringReader("command 1\ncommand 2\ncommand 3\n");
         final StringWriter canvas = new StringWriter();
 
-        process(simulatedTextInput, canvas, Map.of("command 1", "output from command 1",
-                "command 2", "output from command 2",
-                "command 3", "output from command 3"));
+        process(simulatedTextInput, canvas, new LightweightCommandInterpreter(
+                Map.of("command 1", "output from command 1",
+                        "command 2", "output from command 2",
+                        "command 3", "output from command 3")));
 
         Assertions.assertEquals(
                 List.of(
@@ -62,17 +66,26 @@ public class ProcessTextCommandsTest {
         return new BufferedReader(new StringReader(multilineText)).lines().toList();
     }
 
-    private void process(StringReader textInput, StringWriter canvas, Map<String, String> commandInterpreter) {
+    private void process(StringReader textInput, StringWriter canvas, CommandInterpreter commandInterpreter) {
         final PrintWriter out = new PrintWriter(canvas, true);
 
         final Stream<String> textInputAsLines = new BufferedReader(textInput).lines();
 
-        final Stream<String> outputLines = interpretCommands(commandInterpreter, textInputAsLines);
+        final Stream<String> outputLines = textInputAsLines.map(commandInterpreter::interpretCommand);
 
         outputLines.forEachOrdered(outputLine -> out.println(outputLine));
     }
 
-    private Stream<String> interpretCommands(Map<String, String> commandInterpreter, Stream<String> textInputAsLines) {
-        return textInputAsLines.map(line -> commandInterpreter.get(line));
+    private static final class LightweightCommandInterpreter implements CommandInterpreter {
+        private final Map<String, String> commandInterpreter;
+
+        private LightweightCommandInterpreter(Map<String, String> commandInterpreter) {
+            this.commandInterpreter = commandInterpreter;
+        }
+
+        @Override
+        public String interpretCommand(String line) {
+            return commandInterpreter.get(line);
+        }
     }
 }
