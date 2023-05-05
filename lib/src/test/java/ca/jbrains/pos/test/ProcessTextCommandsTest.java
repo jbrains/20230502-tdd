@@ -13,9 +13,9 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 public class ProcessTextCommandsTest {
-    // Now, in order to remove more newlines, I think it would be wise to eliminate
-    // the Reader and Writer and instead focus on processing Streams of text!
-    // Abstraction! :)
+    // Maybe we should split this behavior into two clear parts:
+    // 1. Text UI loop
+    // 2. Interpret Commands in memory
 
     @Test
     void oneCommand() {
@@ -67,6 +67,12 @@ public class ProcessTextCommandsTest {
 
         final Stream<String> textInputAsLines = new BufferedReader(textInput).lines();
 
-        textInputAsLines.map(line -> commandInterpreter.get(line)).forEachOrdered(outputLine -> out.println(outputLine));
+        final Stream<String> outputLines = interpretCommands(commandInterpreter, textInputAsLines);
+
+        outputLines.forEachOrdered(outputLine -> out.println(outputLine));
+    }
+
+    private Stream<String> interpretCommands(Map<String, String> commandInterpreter, Stream<String> textInputAsLines) {
+        return textInputAsLines.map(line -> commandInterpreter.get(line));
     }
 }
