@@ -58,12 +58,13 @@ public class ProcessTextCommandsTest {
         // This is complicated, but it's the easiest way I know to get lines of text
         // from a Reader. I'm open to better suggestions. :)
         final Stream<String> textInputAsLines = new BufferedReader(textInput).lines();
+        final PrintWriter out = new PrintWriter(canvas, true);
 
         final Iterator<String> textInputAsLinesIterator = textInputAsLines.iterator();
         while (textInputAsLinesIterator.hasNext()) {
             final String line = textInputAsLinesIterator.next();
 
-            new PrintWriter(canvas, true).println(commandInterpreter.get(line));
+            out.println(commandInterpreter.get(line));
         }
     }
 }
