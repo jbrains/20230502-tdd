@@ -23,7 +23,9 @@ public class ProcessTextCommandsTest {
         final StringReader simulatedTextInput = new StringReader("command 1\n");
         final StringWriter canvas = new StringWriter();
 
-        process(simulatedTextInput, canvas);
+        process(simulatedTextInput, canvas, Map.of("command 1", "output from command 1",
+                "command 2", "output from command 2",
+                "command 3", "output from command 3"));
 
         Assertions.assertEquals("output from command 1\n", canvas.toString());
     }
@@ -33,7 +35,9 @@ public class ProcessTextCommandsTest {
         final StringReader simulatedTextInput = new StringReader("");
         final StringWriter canvas = new StringWriter();
 
-        process(simulatedTextInput, canvas);
+        process(simulatedTextInput, canvas, Map.of("command 1", "output from command 1",
+                "command 2", "output from command 2",
+                "command 3", "output from command 3"));
 
         Assertions.assertEquals("", canvas.toString());
     }
@@ -43,12 +47,14 @@ public class ProcessTextCommandsTest {
         final StringReader simulatedTextInput = new StringReader("command 1\ncommand 2\ncommand 3\n");
         final StringWriter canvas = new StringWriter();
 
-        process(simulatedTextInput, canvas);
+        process(simulatedTextInput, canvas, Map.of("command 1", "output from command 1",
+                "command 2", "output from command 2",
+                "command 3", "output from command 3"));
 
         Assertions.assertEquals("output from command 1\noutput from command 2\noutput from command 3\n", canvas.toString());
     }
 
-    private void process(StringReader textInput, StringWriter canvas) {
+    private void process(StringReader textInput, StringWriter canvas, Map<String, String> commandInterpreter) {
         // This is complicated, but it's the easiest way I know to get lines of text
         // from a Reader. I'm open to better suggestions. :)
         final Stream<String> textInputAsLines = new BufferedReader(textInput).lines();
@@ -56,10 +62,6 @@ public class ProcessTextCommandsTest {
         final Iterator<String> textInputAsLinesIterator = textInputAsLines.iterator();
         while (textInputAsLinesIterator.hasNext()) {
             final String line = textInputAsLinesIterator.next();
-
-            final Map<String, String> commandInterpreter = Map.of("command 1", "output from command 1",
-                    "command 2", "output from command 2",
-                    "command 3", "output from command 3");
 
             new PrintWriter(canvas, true).println(commandInterpreter.get(line));
         }
