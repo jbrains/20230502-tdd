@@ -51,7 +51,12 @@ public class ProcessTextCommandsTest {
                 "command 2", "output from command 2",
                 "command 3", "output from command 3"));
 
-        Assertions.assertEquals(lines("output from command 1\noutput from command 2\noutput from command 3\n"), lines(canvas.toString()));
+        Assertions.assertEquals(
+                List.of(
+                        "output from command 1",
+                        "output from command 2",
+                        "output from command 3"),
+                lines(canvas.toString()));
     }
 
     private List<String> lines(String multilineText) {
