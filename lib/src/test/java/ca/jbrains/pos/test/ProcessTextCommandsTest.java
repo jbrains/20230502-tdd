@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.stream.Stream;
 
 public class ProcessTextCommandsTest {
@@ -37,15 +38,30 @@ public class ProcessTextCommandsTest {
         Assertions.assertEquals("", canvas.toString());
     }
 
+    @Test
+    void manyCommands() {
+        final StringReader simulatedTextInput = new StringReader("command 1\ncommand 2\ncommand 3\n");
+        final StringWriter canvas = new StringWriter();
+
+        process(simulatedTextInput, canvas);
+
+        Assertions.assertEquals("output from command 1\noutput from command 2\noutput from command 3\n", canvas.toString());
+    }
+
     private void process(StringReader textInput, StringWriter canvas) {
         // This is complicated, but it's the easiest way I know to get lines of text
         // from a Reader. I'm open to better suggestions. :)
         final Stream<String> textInputAsLines = new BufferedReader(textInput).lines();
 
         final Iterator<String> textInputAsLinesIterator = textInputAsLines.iterator();
-        if (textInputAsLinesIterator.hasNext()) {
-            // We don't even need to look at the line of text yet!
-            new PrintWriter(canvas, true).println("output from command 1");
+        while (textInputAsLinesIterator.hasNext()) {
+            final String line = textInputAsLinesIterator.next();
+
+            final Map<String, String> commandInterpreter = Map.of("command 1", "output from command 1",
+                    "command 2", "output from command 2",
+                    "command 3", "output from command 3");
+
+            new PrintWriter(canvas, true).println(commandInterpreter.get(line));
         }
     }
 }
