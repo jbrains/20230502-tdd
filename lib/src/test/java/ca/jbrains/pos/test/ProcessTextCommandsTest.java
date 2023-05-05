@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -27,7 +28,7 @@ public class ProcessTextCommandsTest {
                 "command 2", "output from command 2",
                 "command 3", "output from command 3"));
 
-        Assertions.assertEquals("output from command 1\n", canvas.toString());
+        Assertions.assertEquals(List.of("output from command 1"), lines(canvas.toString()));
     }
 
     @Test
@@ -39,7 +40,7 @@ public class ProcessTextCommandsTest {
                 "command 2", "output from command 2",
                 "command 3", "output from command 3"));
 
-        Assertions.assertEquals("", canvas.toString());
+        Assertions.assertEquals(Collections.emptyList(), lines(canvas.toString()));
     }
 
     @Test
