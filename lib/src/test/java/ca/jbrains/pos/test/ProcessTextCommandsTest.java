@@ -11,38 +11,31 @@ import java.util.stream.Stream;
 
 public class ProcessTextCommandsTest {
     // Test List:
-    // - happy path, process lines until "quit":
-    //    - 1 command, then quit
-    //    - many commands, then quit
-    //    - premature end of stream
+    // - happy path, process lines until the stream ends.
+    //    - 1 command
+    //    - 0 commands
+    //    - many commands
 
     @Test
-    void quitBeforeAnyCommands() {
-        final StringReader simulatedTextInput = new StringReader("quit\n");
+    void oneCommand() {
+        final StringReader simulatedTextInput = new StringReader("command 1\n");
         final StringWriter canvas = new StringWriter();
 
         process(simulatedTextInput, canvas);
 
-        Assertions.assertEquals("", canvas.toString());
-    }
-
-    @Test
-    void oneCommandThenQuit() {
-        final StringReader simulatedTextInput = new StringReader("12345\nquit\n");
-        final StringWriter canvas = new StringWriter();
-
-        process(simulatedTextInput, canvas);
-
-        Assertions.assertEquals("CAD 7.95\n", canvas.toString());
+        Assertions.assertEquals("output from command 1\n", canvas.toString());
     }
 
     private void process(StringReader textInput, StringWriter canvas) {
+        // This is complicated, but it's the easiest way I know to get lines of text
+        // from a Reader. I'm open to better suggestions. :)
         final Stream<String> textInputAsLines = new BufferedReader(textInput).lines();
-        final PrintWriter out = new PrintWriter(canvas, true);
 
-        for (String line : textInputAsLines.toList()) {
-            if ("quit".equals(line)) break;
-            out.println("CAD 7.95");
-        }
+        // Our only test provides 1 line of text, so we can safely assume that there
+        // is 1 line of text. If not, then this should fail with an exception.
+        final String line = textInputAsLines.iterator().next();
+
+        // We don't even need to look at the line of text yet!
+        new PrintWriter(canvas, true).println("output from command 1");
     }
 }
