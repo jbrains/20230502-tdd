@@ -17,6 +17,10 @@ public class InterpretCommandTest {
 
     @Test
     void happyPath() {
+        // This feels a lot like the tests for Sell One Item.
+        // I don't want to repeat those ideas here, especially
+        // when I _truly_ prefer to focus on the UI behavior.
+        // How do I proceed?
         Assertions.assertEquals("CAD 7.95", interpretCommand("12345"));
     }
 
