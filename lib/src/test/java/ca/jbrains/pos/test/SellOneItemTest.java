@@ -119,6 +119,7 @@ public class SellOneItemTest {
                 }
             }
 
+            display.text = result;
             return result;
         }
     }
