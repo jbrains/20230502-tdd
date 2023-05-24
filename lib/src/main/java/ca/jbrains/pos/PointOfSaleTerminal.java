@@ -10,7 +10,9 @@ public class PointOfSaleTerminal {
                 new PointOfSaleCommandInterpreter(
                         new Sale(
                                 new EnglishLanguageMessageFormat(),
-                                new Catalog(Map.of()))))
+                                new Catalog(
+                                        Map.of("12345", "CAD 7.95",
+                                                "23456", "CAD 12.50")))))
                 .process(
                         new InputStreamReader(System.in),
                         new OutputStreamWriter(System.out)
