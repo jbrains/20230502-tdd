@@ -11,11 +11,10 @@ public class SellOneItemTest {
     @Test
     void productFound() {
         final Display display = new Display();
-        final HashMap<String, String> pricesByBarcode = new HashMap<>() {{
+        final Sale sale = new Sale(display, new Catalog(new HashMap<String, String>() {{
             put("12345", "CAD 7.95");
             put("23456", "CAD 12.50");
-        }};
-        final Sale sale = new Sale(display, new Catalog(pricesByBarcode));
+        }}));
 
         sale.onBarcode("12345");
         Assertions.assertEquals("CAD 7.95", display.getText());
@@ -24,11 +23,10 @@ public class SellOneItemTest {
     @Test
     void anotherProductFound() {
         final Display display = new Display();
-        final HashMap<String, String> pricesByBarcode = new HashMap<>() {{
+        final Sale sale = new Sale(display, new Catalog(new HashMap<String, String>() {{
             put("12345", "CAD 7.95");
             put("23456", "CAD 12.50");
-        }};
-        final Sale sale = new Sale(display, new Catalog(pricesByBarcode));
+        }}));
 
         sale.onBarcode("23456");
         Assertions.assertEquals("CAD 12.50", display.getText());
@@ -46,7 +44,7 @@ public class SellOneItemTest {
     @Test
     void emptyBarcode() {
         final Display display = new Display();
-        final Sale sale = new Sale(display, new Catalog(null));
+        final Sale sale = new Sale(display, null);
 
         sale.onBarcode("");
         Assertions.assertEquals("Scanning error: empty barcode", display.getText());
@@ -92,7 +90,7 @@ public class SellOneItemTest {
             this.display = display;
             this.catalog = catalog;
         }
-    
+
         public void onBarcode(String barcode) {
             if ("".equals(barcode)) {
                 display.displayEmptyBarcodeMessage();
