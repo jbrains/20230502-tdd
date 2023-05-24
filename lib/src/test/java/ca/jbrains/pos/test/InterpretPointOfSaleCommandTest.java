@@ -46,7 +46,14 @@ public class InterpretPointOfSaleCommandTest {
     }
 
     private String interpretCommand(String textCommand, CommandInterpreter barcodeScannedCommandInterpreter) {
-        final String trimmedCommand = textCommand.trim();
+        return dispatchCommand(barcodeScannedCommandInterpreter, sanitizeCommand(textCommand));
+    }
+
+    private static String dispatchCommand(CommandInterpreter barcodeScannedCommandInterpreter, String trimmedCommand) {
         return trimmedCommand.isEmpty() ? "" : barcodeScannedCommandInterpreter.interpretCommand(trimmedCommand);
+    }
+
+    private static String sanitizeCommand(String textCommand) {
+        return textCommand.trim();
     }
 }
