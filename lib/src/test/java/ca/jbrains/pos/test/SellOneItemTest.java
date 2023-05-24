@@ -16,7 +16,8 @@ public class SellOneItemTest {
             put("23456", "CAD 12.50");
         }}));
 
-        sale.onBarcode("12345");
+        final String responseMessage = sale.onBarcode("12345");
+        Assertions.assertEquals("CAD 7.95", responseMessage);
         Assertions.assertEquals("CAD 7.95", display.getText());
     }
 
@@ -28,8 +29,8 @@ public class SellOneItemTest {
             put("23456", "CAD 12.50");
         }}));
 
-        sale.onBarcode("23456");
-        Assertions.assertEquals("CAD 12.50", display.getText());
+        final String responseMessage = sale.onBarcode("23456");
+        Assertions.assertEquals("CAD 12.50", responseMessage);
     }
 
     @Test
@@ -37,8 +38,8 @@ public class SellOneItemTest {
         final Display display = new Display();
         final Sale sale = new Sale(display, new Catalog(Collections.emptyMap()));
 
-        sale.onBarcode("99999");
-        Assertions.assertEquals("Product not found: 99999", display.getText());
+        final String responseMessage = sale.onBarcode("99999");
+        Assertions.assertEquals("Product not found: 99999", responseMessage);
     }
 
     @Test
@@ -46,7 +47,8 @@ public class SellOneItemTest {
         final Display display = new Display();
         final Sale sale = new Sale(display, null);
 
-        sale.onBarcode("");
+        final String responseMessage = sale.onBarcode("");
+        Assertions.assertEquals("Scanning error: empty barcode", responseMessage);
         Assertions.assertEquals("Scanning error: empty barcode", display.getText());
     }
 
