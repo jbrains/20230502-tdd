@@ -7,8 +7,8 @@ public final class PointOfSaleCommandInterpreter implements CommandInterpreter {
         this.barcodeScannedCommandInterpreter = barcodeScannedCommandInterpreter;
     }
 
-    private static String dispatchCommand(CommandInterpreter barcodeScannedCommandInterpreter, String trimmedCommand) {
-        return trimmedCommand.isEmpty() ? "" : barcodeScannedCommandInterpreter.interpretCommand(trimmedCommand);
+    private String dispatchCommand(String trimmedCommand) {
+        return trimmedCommand.isEmpty() ? "" : this.barcodeScannedCommandInterpreter.interpretCommand(trimmedCommand);
     }
 
     private static String sanitizeCommand(String textCommand) {
@@ -16,6 +16,6 @@ public final class PointOfSaleCommandInterpreter implements CommandInterpreter {
     }
 
     public String interpretCommand(String textCommand) {
-        return dispatchCommand(barcodeScannedCommandInterpreter, sanitizeCommand(textCommand));
+        return dispatchCommand(sanitizeCommand(textCommand));
     }
 }
