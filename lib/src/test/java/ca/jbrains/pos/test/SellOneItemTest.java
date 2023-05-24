@@ -82,19 +82,16 @@ public class SellOneItemTest {
         }
 
         public String onBarcode(String barcode) {
-            String result;
             if ("".equals(barcode)) {
-                result = englishLanguageMessageFormat.formatEmptyBarcodeMessage();
-            } else {
-                final String maybePriceAsText = catalog.findPrice(barcode);
-                if (maybePriceAsText == null) {
-                    result = englishLanguageMessageFormat.formatProductNotFoundMessage(barcode);
-                } else {
-                    result = englishLanguageMessageFormat.formatPrice(maybePriceAsText);
-                }
+                return englishLanguageMessageFormat.formatEmptyBarcodeMessage();
             }
 
-            return result;
+            final String maybePriceAsText = catalog.findPrice(barcode);
+            if (maybePriceAsText == null) {
+                return englishLanguageMessageFormat.formatProductNotFoundMessage(barcode);
+            } else {
+                return englishLanguageMessageFormat.formatPrice(maybePriceAsText);
+            }
         }
     }
 }
