@@ -21,39 +21,27 @@ public class InterpretPointOfSaleCommandTest {
     void happyPath() {
         // Metaconstant trick in order to signal more clearly that
         // "We interpreted this as a barcode."
-        Assertions.assertEquals("::barcode scanned::", interpretCommand("12345", line -> "::barcode scanned::"));
+        Assertions.assertEquals("::barcode scanned::", new PointOfSaleCommandInterpreter(line -> "::barcode scanned::").interpretCommand("12345"));
     }
 
     @Test
     void trimWhitespace() {
         Assertions.assertEquals(
                 "::barcode '12345' scanned::",
-                interpretCommand("\t  12345  \t   ", interceptTheBarcodeScanned));
+                new PointOfSaleCommandInterpreter(interceptTheBarcodeScanned).interpretCommand("\t  12345  \t   "));
     }
 
     @Test
     void empty() {
         Assertions.assertEquals(
                 "",
-                interpretCommand("", interceptTheBarcodeScanned));
+                new PointOfSaleCommandInterpreter(interceptTheBarcodeScanned).interpretCommand(""));
     }
 
     @Test
     void emptyAfterTrimming() {
         Assertions.assertEquals(
                 "",
-                interpretCommand("\t", interceptTheBarcodeScanned));
-    }
-
-    private String interpretCommand(String textCommand, CommandInterpreter barcodeScannedCommandInterpreter) {
-        return dispatchCommand(barcodeScannedCommandInterpreter, sanitizeCommand(textCommand));
-    }
-
-    private static String dispatchCommand(CommandInterpreter barcodeScannedCommandInterpreter, String trimmedCommand) {
-        return trimmedCommand.isEmpty() ? "" : barcodeScannedCommandInterpreter.interpretCommand(trimmedCommand);
-    }
-
-    private static String sanitizeCommand(String textCommand) {
-        return textCommand.trim();
+                new PointOfSaleCommandInterpreter(interceptTheBarcodeScanned).interpretCommand("\t"));
     }
 }
