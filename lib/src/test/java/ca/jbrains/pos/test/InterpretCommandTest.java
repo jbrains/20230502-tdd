@@ -21,17 +21,15 @@ public class InterpretCommandTest {
         // I don't want to repeat those ideas here, especially
         // when I _truly_ prefer to focus on the UI behavior.
         // How do I proceed?
-        final SellOneItemTest.Display display = new SellOneItemTest.Display();
-        Assertions.assertEquals("CAD 7.95", interpretCommand("12345", new SellOneItemTest.Sale(display, null) {
+        Assertions.assertEquals("CAD 7.95", interpretCommand("12345", new SellOneItemTest.Sale(null, null) {
             @Override
-            public void onBarcode(String barcode) {
-                display.displayPrice("CAD 7.95");
+            public String onBarcode(String barcode) {
+                return "CAD 7.95";
             }
-        }, display));
+        }));
     }
 
-    private String interpretCommand(String textCommand, SellOneItemTest.Sale sale, SellOneItemTest.Display display) {
-        sale.onBarcode(textCommand);
-        return display.getText();
+    private String interpretCommand(String textCommand, SellOneItemTest.Sale sale) {
+        return sale.onBarcode(textCommand);
     }
 }
