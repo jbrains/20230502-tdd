@@ -3,10 +3,7 @@ package ca.jbrains.pos.test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.io.BufferedReader;
-import java.io.PrintWriter;
-import java.io.StringReader;
-import java.io.StringWriter;
+import java.io.*;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -66,7 +63,7 @@ public class ProcessTextCommandsTest {
         return new BufferedReader(new StringReader(multilineText)).lines().toList();
     }
 
-    private void process(StringReader textInput, StringWriter canvas, CommandInterpreter commandInterpreter) {
+    private void process(Reader textInput, Writer canvas, CommandInterpreter commandInterpreter) {
         final PrintWriter out = new PrintWriter(canvas, true);
 
         final Stream<String> textInputAsLines = new BufferedReader(textInput).lines();
