@@ -105,17 +105,17 @@ public class SellOneItemTest {
 
         public String onBarcode(String barcode) {
             if ("".equals(barcode)) {
-                display.displayEmptyBarcodeMessage();
+                display.text = display.formatEmptyBarcodeMessage();
                 return display.formatEmptyBarcodeMessage();
             }
 
             final String maybePriceAsText = catalog.findPrice(barcode);
 
             if (maybePriceAsText == null) {
-                display.displayProductNotFoundMessage(barcode);
+                display.text = display.formatProductNotFoundMessage(barcode);
                 return display.formatProductNotFoundMessage(barcode);
             } else {
-                display.displayPrice(maybePriceAsText);
+                display.text = display.formatPrice(maybePriceAsText);
                 return display.formatPrice(maybePriceAsText);
             }
         }
