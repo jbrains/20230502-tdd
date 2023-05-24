@@ -59,24 +59,12 @@ public class SellOneItemTest {
             return text;
         }
 
-        public void displayProductNotFoundMessage(String barcode) {
-            this.text = formatProductNotFoundMessage(barcode);
-        }
-
         public String formatProductNotFoundMessage(String barcode) {
             return "Product not found: " + barcode;
         }
 
-        public void displayPrice(String price) {
-            this.text = formatPrice(price);
-        }
-
         public String formatPrice(String price) {
             return price;
-        }
-
-        public void displayEmptyBarcodeMessage() {
-            this.text = formatEmptyBarcodeMessage();
         }
 
         public String formatEmptyBarcodeMessage() {
