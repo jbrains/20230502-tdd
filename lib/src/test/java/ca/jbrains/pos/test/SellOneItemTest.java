@@ -1,5 +1,8 @@
 package ca.jbrains.pos.test;
 
+import ca.jbrains.pos.Catalog;
+import ca.jbrains.pos.EnglishLanguageMessageFormat;
+import ca.jbrains.pos.Sale;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

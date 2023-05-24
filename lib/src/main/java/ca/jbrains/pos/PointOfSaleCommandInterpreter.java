@@ -1,6 +1,6 @@
-package ca.jbrains.pos.test;
+package ca.jbrains.pos;
 
-public final class PointOfSaleCommandInterpreter {
+public final class PointOfSaleCommandInterpreter implements CommandInterpreter {
     private final CommandInterpreter barcodeScannedCommandInterpreter;
 
     public PointOfSaleCommandInterpreter(CommandInterpreter barcodeScannedCommandInterpreter) {

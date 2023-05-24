@@ -1,10 +1,9 @@
-package ca.jbrains.pos.test;
+package ca.jbrains.pos;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.Writer;
-import java.util.Objects;
 import java.util.stream.Stream;
 
 public final class CommandProcessor {
@@ -14,7 +13,7 @@ public final class CommandProcessor {
         this.commandInterpreter = commandInterpreter;
     }
 
-    void process(Reader textInput, Writer canvas) {
+    public void process(Reader textInput, Writer canvas) {
         final PrintWriter out = new PrintWriter(canvas, true);
 
         final Stream<String> textInputAsLines = new BufferedReader(textInput).lines();
