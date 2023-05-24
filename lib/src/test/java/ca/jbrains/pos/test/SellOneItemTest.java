@@ -10,55 +10,43 @@ import java.util.Map;
 public class SellOneItemTest {
     @Test
     void productFound() {
-        final Display display = new Display();
-        final Sale sale = new Sale(display, new Catalog(new HashMap<String, String>() {{
+        final EnglishLanguageMessageFormat englishLanguageMessageFormat = new EnglishLanguageMessageFormat();
+        final Sale sale = new Sale(englishLanguageMessageFormat, new Catalog(new HashMap<String, String>() {{
             put("12345", "CAD 7.95");
             put("23456", "CAD 12.50");
         }}));
 
-        final String responseMessage = sale.onBarcode("12345");
-        Assertions.assertEquals("CAD 7.95", responseMessage);
-        Assertions.assertEquals("CAD 7.95", display.getText());
+        Assertions.assertEquals("CAD 7.95", sale.onBarcode("12345"));
     }
 
     @Test
     void anotherProductFound() {
-        final Display display = new Display();
-        final Sale sale = new Sale(display, new Catalog(new HashMap<String, String>() {{
+        final EnglishLanguageMessageFormat englishLanguageMessageFormat = new EnglishLanguageMessageFormat();
+        final Sale sale = new Sale(englishLanguageMessageFormat, new Catalog(new HashMap<String, String>() {{
             put("12345", "CAD 7.95");
             put("23456", "CAD 12.50");
         }}));
 
-        final String responseMessage = sale.onBarcode("23456");
-        Assertions.assertEquals("CAD 12.50", responseMessage);
+        Assertions.assertEquals("CAD 12.50", sale.onBarcode("23456"));
     }
 
     @Test
     void productNotFound() {
-        final Display display = new Display();
-        final Sale sale = new Sale(display, new Catalog(Collections.emptyMap()));
+        final EnglishLanguageMessageFormat englishLanguageMessageFormat = new EnglishLanguageMessageFormat();
+        final Sale sale = new Sale(englishLanguageMessageFormat, new Catalog(Collections.emptyMap()));
 
-        final String responseMessage = sale.onBarcode("99999");
-        Assertions.assertEquals("Product not found: 99999", responseMessage);
+        Assertions.assertEquals("Product not found: 99999", sale.onBarcode("99999"));
     }
 
     @Test
     void emptyBarcode() {
-        final Display display = new Display();
-        final Sale sale = new Sale(display, null);
+        final EnglishLanguageMessageFormat englishLanguageMessageFormat = new EnglishLanguageMessageFormat();
+        final Sale sale = new Sale(englishLanguageMessageFormat, null);
 
-        final String responseMessage = sale.onBarcode("");
-        Assertions.assertEquals("Scanning error: empty barcode", responseMessage);
-        Assertions.assertEquals("Scanning error: empty barcode", display.getText());
+        Assertions.assertEquals("Scanning error: empty barcode", sale.onBarcode(""));
     }
 
-    public static class Display {
-        private String text;
-
-        public String getText() {
-            return text;
-        }
-
+    public static class EnglishLanguageMessageFormat {
         public String formatProductNotFoundMessage(String barcode) {
             return "Product not found: " + barcode;
         }
@@ -85,29 +73,27 @@ public class SellOneItemTest {
     }
 
     public static class Sale {
-        private final Display display;
+        private final EnglishLanguageMessageFormat englishLanguageMessageFormat;
         private final Catalog catalog;
 
-        public Sale(Display display, Catalog catalog) {
-            this.display = display;
+        public Sale(EnglishLanguageMessageFormat englishLanguageMessageFormat, Catalog catalog) {
+            this.englishLanguageMessageFormat = englishLanguageMessageFormat;
             this.catalog = catalog;
         }
 
         public String onBarcode(String barcode) {
             String result;
             if ("".equals(barcode)) {
-                result = display.formatEmptyBarcodeMessage();
+                result = englishLanguageMessageFormat.formatEmptyBarcodeMessage();
             } else {
                 final String maybePriceAsText = catalog.findPrice(barcode);
                 if (maybePriceAsText == null) {
-                    result = display.formatProductNotFoundMessage(barcode);
+                    result = englishLanguageMessageFormat.formatProductNotFoundMessage(barcode);
                 } else {
-                    result = display.formatPrice(maybePriceAsText);
+                    result = englishLanguageMessageFormat.formatPrice(maybePriceAsText);
                 }
             }
 
-            // SMELL This has now become nothing more than an indirect return value!
-            display.text = result;
             return result;
         }
     }
