@@ -72,7 +72,7 @@ public class SellOneItemTest {
         }
     }
 
-    public static class Sale {
+    public static class Sale implements CommandInterpreter {
         private final EnglishLanguageMessageFormat englishLanguageMessageFormat;
         private final Catalog catalog;
 
@@ -92,6 +92,11 @@ public class SellOneItemTest {
             } else {
                 return englishLanguageMessageFormat.formatPrice(maybePriceAsText);
             }
+        }
+
+        @Override
+        public String interpretCommand(String line) {
+            return onBarcode(line);
         }
     }
 }
