@@ -106,6 +106,7 @@ public class SellOneItemTest {
                 }
             }
 
+            // SMELL This has now become nothing more than an indirect return value!
             display.text = result;
             return result;
         }
