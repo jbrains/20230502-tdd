@@ -16,14 +16,14 @@ public class Sale implements CommandInterpreter {
             return englishLanguageMessageFormat.formatEmptyBarcodeMessage();
         }
 
-        return reallyOnBarcode(barcode);
+        return reallyOnBarcode(new Barcode(barcode));
     }
 
     // REFACTOR parsing success: Extract to onBarcode(Barcode).
-    private String reallyOnBarcode(String barcode) {
-        final String maybePriceAsText = catalog.findPrice(barcode);
+    private String reallyOnBarcode(Barcode barcode) {
+        final String maybePriceAsText = catalog.findPrice(barcode.barcode());
         if (maybePriceAsText == null) {
-            return englishLanguageMessageFormat.formatProductNotFoundMessage(barcode);
+            return englishLanguageMessageFormat.formatProductNotFoundMessage(barcode.barcode());
         } else {
             return englishLanguageMessageFormat.formatPrice(maybePriceAsText);
         }
@@ -36,5 +36,8 @@ public class Sale implements CommandInterpreter {
     @Override
     public String interpretCommand(String line) {
         return onBarcode(line);
+    }
+
+    private record Barcode(String barcode) {
     }
 }
