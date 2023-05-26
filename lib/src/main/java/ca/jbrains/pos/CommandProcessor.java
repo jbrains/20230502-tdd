@@ -22,8 +22,9 @@ public final class CommandProcessor {
 
         final Stream<String> outputLines = textInputAsLines
                 .map(TextCommand::parseTextCommand)
-                .filter(Predicate.not(Objects::isNull))
-                .map(commandInterpreter::interpretCommand);
+                .map(maybeTextCommand -> maybeTextCommand == null
+                        ? "Empty command: please try again."
+                        : commandInterpreter.interpretCommand(maybeTextCommand));
 
         outputLines.forEachOrdered(outputLine -> out.println(outputLine));
     }
