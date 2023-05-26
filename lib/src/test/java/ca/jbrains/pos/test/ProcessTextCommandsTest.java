@@ -2,6 +2,7 @@ package ca.jbrains.pos.test;
 
 import ca.jbrains.pos.CommandInterpreter;
 import ca.jbrains.pos.CommandProcessor;
+import ca.jbrains.pos.TextCommand;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -72,8 +73,8 @@ public class ProcessTextCommandsTest {
         }
 
         @Override
-        public String interpretCommandAsText(String line) {
-            return script.get(line);
+        public String interpretCommandAsText(TextCommand textCommand) {
+            return script.get(textCommand.text());
         }
     }
 }
