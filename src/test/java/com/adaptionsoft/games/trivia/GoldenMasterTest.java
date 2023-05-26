@@ -38,6 +38,20 @@ public class GoldenMasterTest {
         Approvals.verify(allTextFromStdout);
     }
 
+    @Test
+    void sample_continuousUse() {
+        final ByteArrayOutputStream fakeStdoutStream = new ByteArrayOutputStream();
+
+        System.setOut(new PrintStream(fakeStdoutStream));
+
+        for (int i = 0; i < 10000; i++)
+            runGame(762 + 19 * i);
+
+        final String allTextFromStdout = fakeStdoutStream.toString(Charset.forName("UTF-8"));
+
+        Approvals.verify(allTextFromStdout);
+    }
+
     private static void runGame(int pathNumber) {
         boolean notAWinner;
 
@@ -58,7 +72,6 @@ public class GoldenMasterTest {
             } else {
                 notAWinner = aGame.wasCorrectlyAnswered();
             }
-
 
 
         } while (notAWinner);
