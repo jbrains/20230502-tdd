@@ -9,6 +9,7 @@ public class Sale implements CommandInterpreter {
         this.catalog = catalog;
     }
 
+    // REFACTOR Move up into the UI layer, because it doesn't even know about selling an item yet!
     public String parseCommandAsBarcodeThenHandleBarcode(String maybeBarcodeAsText) {
         final Barcode barcode = parseBarcode(maybeBarcodeAsText);
         if (barcode == null) {
