@@ -11,14 +11,11 @@ public class Sale implements CommandInterpreter {
 
     public String parseCommandAsBarcodeThenHandleBarcode(String maybeBarcodeAsText) {
         final Barcode barcode = parseBarcode(maybeBarcodeAsText);
-
-        String responseMessage;
         if (barcode == null) {
-            responseMessage = englishLanguageMessageFormat.formatEmptyBarcodeMessage();
-        } else {
-            responseMessage = reallyOnBarcode(barcode);
+            return englishLanguageMessageFormat.formatEmptyBarcodeMessage();
         }
-        return responseMessage;
+
+        return reallyOnBarcode(barcode);
     }
 
     private static Barcode parseBarcode(String maybeBarcodeAsText) {
