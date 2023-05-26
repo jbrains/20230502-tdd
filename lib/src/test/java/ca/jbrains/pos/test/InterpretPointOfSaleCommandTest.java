@@ -12,6 +12,6 @@ public class InterpretPointOfSaleCommandTest {
         // Metaconstant trick in order to signal more clearly that
         // "We interpreted this as a barcode."
         final CommandInterpreter barcodeScannedInterpreter = (textCommand) -> "::barcode scanned::";
-        Assertions.assertEquals("::barcode scanned::", new PointOfSaleCommandInterpreter(barcodeScannedInterpreter).interpretCommandAsText(new TextCommand("12345")));
+        Assertions.assertEquals("::barcode scanned::", new PointOfSaleCommandInterpreter(barcodeScannedInterpreter).interpretCommand(new TextCommand("12345")));
     }
 }

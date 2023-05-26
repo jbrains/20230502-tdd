@@ -73,7 +73,7 @@ public class ProcessTextCommandsTest {
         }
 
         @Override
-        public String interpretCommandAsText(TextCommand textCommand) {
+        public String interpretCommand(TextCommand textCommand) {
             return script.get(textCommand.text());
         }
     }

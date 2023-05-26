@@ -1,5 +1,5 @@
 package ca.jbrains.pos;
 
 public interface CommandInterpreter {
-    String interpretCommandAsText(TextCommand textCommand);
+    String interpretCommand(TextCommand textCommand);
 }
