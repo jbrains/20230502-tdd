@@ -8,6 +8,7 @@ public final class PointOfSaleCommandInterpreter implements CommandInterpreter {
     }
 
     public String interpretCommand(TextCommand textCommand) {
+        // Every command happens to be a Barcode so far!
         return this.barcodeScannedCommandInterpreter.interpretCommand(textCommand);
     }
 }
