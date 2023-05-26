@@ -1,6 +1,5 @@
 package com.adaptionsoft.games.trivia;
 
-import com.adaptionsoft.games.trivia.runner.GameRunner;
 import com.adaptionsoft.games.uglytrivia.Game;
 import org.approvaltests.Approvals;
 import org.junit.jupiter.api.Test;
@@ -17,14 +16,14 @@ public class GoldenMasterTest {
 
         System.setOut(new PrintStream(fakeStdoutStream));
 
-        runGame();
+        runGame(762);
 
         final String allTextFromStdout = fakeStdoutStream.toString(Charset.forName("UTF-8"));
 
         Approvals.verify(allTextFromStdout);
     }
 
-    private static void runGame() {
+    private static void runGame(int pathNumber) {
         boolean notAWinner;
 
         Game aGame = new Game();
@@ -33,7 +32,7 @@ public class GoldenMasterTest {
         aGame.add("Pat");
         aGame.add("Sue");
 
-        Random rand = new Random(762);
+        Random rand = new Random(pathNumber);
 
         do {
 
