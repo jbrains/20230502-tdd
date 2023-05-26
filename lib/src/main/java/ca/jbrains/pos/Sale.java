@@ -9,23 +9,7 @@ public class Sale implements CommandInterpreter {
         this.catalog = catalog;
     }
 
-    // REFACTOR Move up into the UI layer, because it doesn't even know about selling an item yet!
-    public String parseCommandAsBarcodeThenHandleBarcode(String maybeBarcodeAsText) {
-        final Barcode barcode = parseBarcode(maybeBarcodeAsText);
-        if (barcode == null) {
-            return englishLanguageMessageFormat.formatEmptyBarcodeMessage();
-        }
-
-        return onBarcode(barcode);
-    }
-
-    private static Barcode parseBarcode(String maybeBarcodeAsText) {
-        return "".equals(maybeBarcodeAsText)
-                ? null
-                : new Barcode(maybeBarcodeAsText);
-    }
-
-    private String onBarcode(Barcode barcode) {
+    public String onBarcode(Barcode barcode) {
         final String maybePriceAsText = catalog.findPrice(barcode.barcode());
         if (maybePriceAsText == null) {
             return englishLanguageMessageFormat.formatProductNotFoundMessage(barcode.barcode());
@@ -36,9 +20,11 @@ public class Sale implements CommandInterpreter {
 
     @Override
     public String interpretCommand(String line) {
-        return parseCommandAsBarcodeThenHandleBarcode(line);
-    }
+        final Barcode barcode = Barcode.parseBarcode(line);
+        if (barcode == null) {
+            return englishLanguageMessageFormat.formatEmptyBarcodeMessage();
+        }
 
-    private record Barcode(String barcode) {
+        return onBarcode(barcode);
     }
 }

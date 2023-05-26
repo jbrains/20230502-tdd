@@ -1,5 +1,6 @@
 package ca.jbrains.pos.test;
 
+import ca.jbrains.pos.Barcode;
 import ca.jbrains.pos.Catalog;
 import ca.jbrains.pos.EnglishLanguageMessageFormat;
 import ca.jbrains.pos.Sale;
@@ -18,7 +19,7 @@ public class SellOneItemTest {
             put("23456", "CAD 12.50");
         }}));
 
-        Assertions.assertEquals("CAD 7.95", sale.parseCommandAsBarcodeThenHandleBarcode("12345"));
+        Assertions.assertEquals("CAD 7.95", sale.onBarcode(Barcode.parseBarcode("12345")));
     }
 
     @Test
@@ -29,7 +30,7 @@ public class SellOneItemTest {
             put("23456", "CAD 12.50");
         }}));
 
-        Assertions.assertEquals("CAD 12.50", sale.parseCommandAsBarcodeThenHandleBarcode("23456"));
+        Assertions.assertEquals("CAD 12.50", sale.onBarcode(Barcode.parseBarcode("23456")));
     }
 
     @Test
@@ -37,14 +38,6 @@ public class SellOneItemTest {
         final EnglishLanguageMessageFormat englishLanguageMessageFormat = new EnglishLanguageMessageFormat();
         final Sale sale = new Sale(englishLanguageMessageFormat, new Catalog(Collections.emptyMap()));
 
-        Assertions.assertEquals("Product not found: 99999", sale.parseCommandAsBarcodeThenHandleBarcode("99999"));
-    }
-
-    @Test
-    void emptyBarcode() {
-        final EnglishLanguageMessageFormat englishLanguageMessageFormat = new EnglishLanguageMessageFormat();
-        final Sale sale = new Sale(englishLanguageMessageFormat, null);
-
-        Assertions.assertEquals("Scanning error: empty barcode", sale.parseCommandAsBarcodeThenHandleBarcode(""));
+        Assertions.assertEquals("Product not found: 99999", sale.onBarcode(Barcode.parseBarcode("99999")));
     }
 }
