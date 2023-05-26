@@ -15,7 +15,7 @@ public class Sale implements CommandInterpreter {
             return englishLanguageMessageFormat.formatEmptyBarcodeMessage();
         }
 
-        return reallyOnBarcode(barcode);
+        return onBarcode(barcode);
     }
 
     private static Barcode parseBarcode(String maybeBarcodeAsText) {
@@ -24,8 +24,7 @@ public class Sale implements CommandInterpreter {
                 : new Barcode(maybeBarcodeAsText);
     }
 
-    // REFACTOR parsing success: Extract to onBarcode(Barcode).
-    private String reallyOnBarcode(Barcode barcode) {
+    private String onBarcode(Barcode barcode) {
         final String maybePriceAsText = catalog.findPrice(barcode.barcode());
         if (maybePriceAsText == null) {
             return englishLanguageMessageFormat.formatProductNotFoundMessage(barcode.barcode());
