@@ -22,15 +22,9 @@ public class Sale implements CommandInterpreter {
     }
 
     private static Barcode parseBarcode(String maybeBarcodeAsText) {
-        final Barcode barcode;
-
-        if (failsParsing(maybeBarcodeAsText)) {
-            barcode = null;
-        } else {
-            barcode = new Barcode(maybeBarcodeAsText);
-        }
-
-        return barcode;
+        return "".equals(maybeBarcodeAsText)
+                ? null
+                : new Barcode(maybeBarcodeAsText);
     }
 
     // REFACTOR parsing success: Extract to onBarcode(Barcode).
@@ -41,10 +35,6 @@ public class Sale implements CommandInterpreter {
         } else {
             return englishLanguageMessageFormat.formatPrice(maybePriceAsText);
         }
-    }
-
-    private static boolean failsParsing(String barcode) {
-        return "".equals(barcode);
     }
 
     @Override
