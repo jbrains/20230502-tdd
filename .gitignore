@@ -1,3 +1,6 @@
+# Ignore Maven build output directory
+target
+
 # Ignore Gradle project-specific cache directory
 .gradle
 
