@@ -2,6 +2,8 @@ package com.adaptionsoft.games.trivia;
 
 import com.adaptionsoft.games.uglytrivia.Game;
 import org.approvaltests.Approvals;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -10,6 +12,19 @@ import java.nio.charset.Charset;
 import java.util.Random;
 
 public class GoldenMasterTest {
+
+    private PrintStream productionStdout;
+
+    @BeforeEach
+    void rememberProductionStdout() {
+        productionStdout = System.out;
+    }
+
+    @AfterEach
+    void replaceProductionStdout() {
+        System.setOut(productionStdout);
+    }
+
     @Test
     void something() {
         final ByteArrayOutputStream fakeStdoutStream = new ByteArrayOutputStream();
