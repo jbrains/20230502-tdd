@@ -16,7 +16,11 @@ public class Sale implements CommandInterpreter {
             return englishLanguageMessageFormat.formatEmptyBarcodeMessage();
         }
 
-        // REFACTOR parsing success: Extract to onBarcode(Barcode).
+        return reallyOnBarcode(barcode);
+    }
+
+    // REFACTOR parsing success: Extract to onBarcode(Barcode).
+    private String reallyOnBarcode(String barcode) {
         final String maybePriceAsText = catalog.findPrice(barcode);
         if (maybePriceAsText == null) {
             return englishLanguageMessageFormat.formatProductNotFoundMessage(barcode);
