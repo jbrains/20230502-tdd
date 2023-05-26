@@ -10,16 +10,20 @@ public class Sale implements CommandInterpreter {
     }
 
     public String onBarcode(String maybeBarcodeAsText) {
-        String responseMessage;
         final Barcode barcode;
 
         // REFACTOR Replace with parseBarcode().
         if (failsParsing(maybeBarcodeAsText)) {
             // parsing failure
             barcode = null;
-            responseMessage = englishLanguageMessageFormat.formatEmptyBarcodeMessage();
         } else {
             barcode = new Barcode(maybeBarcodeAsText);
+        }
+
+        String responseMessage;
+        if (barcode == null) {
+            responseMessage = englishLanguageMessageFormat.formatEmptyBarcodeMessage();
+        } else {
             responseMessage = reallyOnBarcode(barcode);
         }
         return responseMessage;
