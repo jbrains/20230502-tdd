@@ -7,11 +7,7 @@ public final class PointOfSaleCommandInterpreter implements CommandInterpreter {
         this.barcodeScannedCommandInterpreter = barcodeScannedCommandInterpreter;
     }
 
-    private String dispatchCommand(TextCommand textCommand) {
-        return this.barcodeScannedCommandInterpreter.interpretCommand(textCommand);
-    }
-
     public String interpretCommand(TextCommand textCommand) {
-        return textCommand == null ? "" : dispatchCommand(textCommand);
+        return this.barcodeScannedCommandInterpreter.interpretCommand(textCommand);
     }
 }
