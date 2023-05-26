@@ -20,6 +20,7 @@ public final class CommandProcessor {
 
         final Stream<String> textInputAsLines = new BufferedReader(textInput).lines();
 
+        // REFACTOR Perhaps this is nicer with Either: map(parseTextCommand).bimap(handleInvalidCommand, interpretCommand)
         final Stream<String> outputLines = textInputAsLines
                 .map(TextCommand::parseTextCommand)
                 .map(maybeTextCommand -> maybeTextCommand == null
