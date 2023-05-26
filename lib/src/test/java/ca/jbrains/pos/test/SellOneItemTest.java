@@ -19,7 +19,7 @@ public class SellOneItemTest {
             put("23456", "CAD 12.50");
         }}));
 
-        Assertions.assertEquals("CAD 7.95", sale.onBarcode(Barcode.parseBarcode("12345")));
+        Assertions.assertEquals("CAD 7.95", sale.onBarcode(new Barcode("12345")));
     }
 
     @Test
@@ -30,7 +30,7 @@ public class SellOneItemTest {
             put("23456", "CAD 12.50");
         }}));
 
-        Assertions.assertEquals("CAD 12.50", sale.onBarcode(Barcode.parseBarcode("23456")));
+        Assertions.assertEquals("CAD 12.50", sale.onBarcode(new Barcode("23456")));
     }
 
     @Test
@@ -38,6 +38,6 @@ public class SellOneItemTest {
         final EnglishLanguageMessageFormat englishLanguageMessageFormat = new EnglishLanguageMessageFormat();
         final Sale sale = new Sale(englishLanguageMessageFormat, new Catalog(Collections.emptyMap()));
 
-        Assertions.assertEquals("Product not found: 99999", sale.onBarcode(Barcode.parseBarcode("99999")));
+        Assertions.assertEquals("Product not found: 99999", sale.onBarcode(new Barcode("99999")));
     }
 }
