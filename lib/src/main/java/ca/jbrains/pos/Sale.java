@@ -22,7 +22,8 @@ public class Sale implements CommandInterpreter {
     public String interpretCommand(String line) {
         final Barcode barcode = Barcode.parseBarcode(line);
         if (barcode == null) {
-            return englishLanguageMessageFormat.formatEmptyBarcodeMessage();
+            // We should apply this same concept to the Command in the layer above!
+            throw new RuntimeException("Impossible parsing error: this line can never be empty.");
         }
 
         return onBarcode(barcode);
