@@ -20,12 +20,6 @@ public class Sale implements CommandInterpreter {
 
     @Override
     public String interpretCommand(TextCommand textCommand) {
-        final Barcode barcode = Barcode.parseBarcode(textCommand.text());
-        if (barcode == null) {
-            // We should apply this same concept to the Command in the layer above!
-            throw new RuntimeException("Impossible parsing error: this line can never be empty.");
-        } else {
-            return onBarcode(barcode);
-        }
+        return onBarcode(Barcode.parseBarcode(textCommand));
     }
 }
