@@ -24,8 +24,8 @@ public class Sale implements CommandInterpreter {
         if (barcode == null) {
             // We should apply this same concept to the Command in the layer above!
             throw new RuntimeException("Impossible parsing error: this line can never be empty.");
+        } else {
+            return onBarcode(barcode);
         }
-
-        return onBarcode(barcode);
     }
 }
