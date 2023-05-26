@@ -14,9 +14,10 @@ public class Sale implements CommandInterpreter {
         if (failsParsing(maybeBarcodeAsText)) {
             // parsing failure
             return englishLanguageMessageFormat.formatEmptyBarcodeMessage();
+        } else {
+            final Barcode barcode = new Barcode(maybeBarcodeAsText);
+            return reallyOnBarcode(barcode);
         }
-        final Barcode barcode = new Barcode(maybeBarcodeAsText);
-        return reallyOnBarcode(barcode);
     }
 
     // REFACTOR parsing success: Extract to onBarcode(Barcode).
