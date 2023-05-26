@@ -26,7 +26,7 @@ public class GoldenMasterTest {
     }
 
     @Test
-    void something() {
+    void sample_1() {
         final ByteArrayOutputStream fakeStdoutStream = new ByteArrayOutputStream();
 
         System.setOut(new PrintStream(fakeStdoutStream));
