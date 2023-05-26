@@ -9,7 +9,7 @@ public class Sale implements CommandInterpreter {
         this.catalog = catalog;
     }
 
-    public String onBarcode(String maybeBarcodeAsText) {
+    public String parseCommandAsBarcodeThenHandleBarcode(String maybeBarcodeAsText) {
         final Barcode barcode = parseBarcode(maybeBarcodeAsText);
 
         String responseMessage;
@@ -49,7 +49,7 @@ public class Sale implements CommandInterpreter {
 
     @Override
     public String interpretCommand(String line) {
-        return onBarcode(line);
+        return parseCommandAsBarcodeThenHandleBarcode(line);
     }
 
     private record Barcode(String barcode) {
