@@ -7,15 +7,12 @@ public final class PointOfSaleCommandInterpreter implements CommandInterpreter {
         this.barcodeScannedCommandInterpreter = barcodeScannedCommandInterpreter;
     }
 
-    private String dispatchCommand(String trimmedCommand) {
-        return trimmedCommand.isEmpty() ? "" : this.barcodeScannedCommandInterpreter.interpretCommand(trimmedCommand);
+    private String dispatchCommand(TextCommand textCommand) {
+        return this.barcodeScannedCommandInterpreter.interpretCommand(textCommand.text());
     }
 
-    private static String sanitizeCommand(String textCommand) {
-        return textCommand.trim();
-    }
-
-    public String interpretCommand(String textCommand) {
-        return dispatchCommand(sanitizeCommand(textCommand));
+    public String interpretCommand(String commandAsText) {
+        final TextCommand textCommand = TextCommand.parseTextCommand(commandAsText);
+        return textCommand == null ? "" : dispatchCommand(textCommand);
     }
 }
