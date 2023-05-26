@@ -18,7 +18,7 @@ public final class CommandProcessor {
 
         final Stream<String> textInputAsLines = new BufferedReader(textInput).lines();
 
-        final Stream<String> outputLines = textInputAsLines.map(commandInterpreter::interpretCommand);
+        final Stream<String> outputLines = textInputAsLines.map(commandInterpreter::interpretCommandAsText);
 
         outputLines.forEachOrdered(outputLine -> out.println(outputLine));
     }

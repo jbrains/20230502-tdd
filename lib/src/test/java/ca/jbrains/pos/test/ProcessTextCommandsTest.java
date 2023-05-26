@@ -72,7 +72,7 @@ public class ProcessTextCommandsTest {
         }
 
         @Override
-        public String interpretCommand(String line) {
+        public String interpretCommandAsText(String line) {
             return script.get(line);
         }
     }

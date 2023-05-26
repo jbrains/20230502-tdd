@@ -19,7 +19,7 @@ public class Sale implements CommandInterpreter {
     }
 
     @Override
-    public String interpretCommand(String line) {
+    public String interpretCommandAsText(String line) {
         final Barcode barcode = Barcode.parseBarcode(line);
         if (barcode == null) {
             // We should apply this same concept to the Command in the layer above!

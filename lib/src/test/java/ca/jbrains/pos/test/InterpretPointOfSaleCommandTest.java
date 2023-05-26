@@ -23,27 +23,27 @@ public class InterpretPointOfSaleCommandTest {
     void happyPath() {
         // Metaconstant trick in order to signal more clearly that
         // "We interpreted this as a barcode."
-        Assertions.assertEquals("::barcode scanned::", new PointOfSaleCommandInterpreter(line -> "::barcode scanned::").interpretCommand("12345"));
+        Assertions.assertEquals("::barcode scanned::", new PointOfSaleCommandInterpreter(line -> "::barcode scanned::").interpretCommandAsText("12345"));
     }
 
     @Test
     void trimWhitespace() {
         Assertions.assertEquals(
                 "::barcode '12345' scanned::",
-                new PointOfSaleCommandInterpreter(interceptTheBarcodeScanned).interpretCommand("\t  12345  \t   "));
+                new PointOfSaleCommandInterpreter(interceptTheBarcodeScanned).interpretCommandAsText("\t  12345  \t   "));
     }
 
     @Test
     void empty() {
         Assertions.assertEquals(
                 "",
-                new PointOfSaleCommandInterpreter(interceptTheBarcodeScanned).interpretCommand(""));
+                new PointOfSaleCommandInterpreter(interceptTheBarcodeScanned).interpretCommandAsText(""));
     }
 
     @Test
     void emptyAfterTrimming() {
         Assertions.assertEquals(
                 "",
-                new PointOfSaleCommandInterpreter(interceptTheBarcodeScanned).interpretCommand("\t"));
+                new PointOfSaleCommandInterpreter(interceptTheBarcodeScanned).interpretCommandAsText("\t"));
     }
 }
