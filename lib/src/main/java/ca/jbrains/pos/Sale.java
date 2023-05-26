@@ -11,7 +11,7 @@ public class Sale implements CommandInterpreter {
 
     public String onBarcode(String barcode) {
         // REFACTOR Replace with parseBarcode().
-        if ("".equals(barcode)) {
+        if (failsParsing(barcode)) {
             // parsing failure
             return englishLanguageMessageFormat.formatEmptyBarcodeMessage();
         }
@@ -23,6 +23,10 @@ public class Sale implements CommandInterpreter {
         } else {
             return englishLanguageMessageFormat.formatPrice(maybePriceAsText);
         }
+    }
+
+    private static boolean failsParsing(String barcode) {
+        return "".equals(barcode);
     }
 
     @Override
