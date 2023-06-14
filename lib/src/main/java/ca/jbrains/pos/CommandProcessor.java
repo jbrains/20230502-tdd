@@ -21,15 +21,8 @@ public final class CommandProcessor {
         // REFACTOR Perhaps this is nicer with Either: map(parseTextCommand).bimap(handleInvalidCommand, interpretCommand)
         final Stream<String> outputLines = textInputAsLines
                 .map(TextCommand::parseTextCommand)
-                .map(this::interpretCommandWarningOnEmptyCommands);
+                .map(maybeTextCommand -> new WarnOnEmptyCommandInterpreter(commandInterpreter).interpretCommandWarningOnEmptyCommands(maybeTextCommand));
 
         outputLines.forEachOrdered(out::println);
-    }
-
-    // REFACTOR This is a CommandInterpreter itself!
-    private String interpretCommandWarningOnEmptyCommands(TextCommand maybeTextCommand) {
-        return maybeTextCommand == null
-                ? "Empty command: please try again."
-                : commandInterpreter.interpretCommand(maybeTextCommand);
     }
 }
