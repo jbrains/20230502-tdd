@@ -8,11 +8,11 @@ public record TextCommand(String text) {
         return sanitizedCommandAsText.isEmpty() ? null : new TextCommand(sanitizedCommandAsText);
     }
 
-    public static Either<TextCommand.ParsingFailure, TextCommand> parseTextCommand(String commandAsText) {
+    public static Either<ParsingFailure, TextCommand> parseTextCommand(String commandAsText) {
         TextCommand legacy = parseTextCommand_Legacy(commandAsText);
-        return legacy == null ? Either.left(new ParsingFailure()) : Either.right(legacy);
+        return legacy == null ? Either.left(new EmptyCommand()) : Either.right(legacy);
     }
 
-    public record ParsingFailure() {
+    public record EmptyCommand() implements ParsingFailure {
     }
 }

@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.Writer;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 public final class CommandProcessor {
@@ -21,14 +22,18 @@ public final class CommandProcessor {
 
         final Stream<String> textInputAsLines = new BufferedReader(textInput).lines();
 
-        Function1<String, Either<TextCommand.ParsingFailure, TextCommand>> parseTextCommand = TextCommand::parseTextCommand;
+        Function1<String, Either<ParsingFailure, TextCommand>> parseTextCommand = TextCommand::parseTextCommand;
 
         io.vavr.collection.Stream.ofAll(textInputAsLines)
                 .map(parseTextCommand.andThen(
                         textCommandParsingResult -> textCommandParsingResult.fold(
-                                parsingFailure -> "Empty command: try again.",
+                                handleEmptyCommand(),
                                 commandInterpreter::interpretCommand)
                 ))
                 .forEach(out::println);
+    }
+
+    private static Function<ParsingFailure, String> handleEmptyCommand() {
+        return parsingFailure -> "Empty command: try again.";
     }
 }
