@@ -27,13 +27,9 @@ public final class CommandProcessor {
         io.vavr.collection.Stream.ofAll(textInputAsLines)
                 .map(parseTextCommand.andThen(
                         textCommandParsingResult -> textCommandParsingResult.fold(
-                                handleEmptyCommand(),
+                                parsingFailure -> "Empty command: try again.",
                                 commandInterpreter::interpretCommand)
                 ))
                 .forEach(out::println);
-    }
-
-    private static Function<ParsingFailure, String> handleEmptyCommand() {
-        return parsingFailure -> "Empty command: try again.";
     }
 }
