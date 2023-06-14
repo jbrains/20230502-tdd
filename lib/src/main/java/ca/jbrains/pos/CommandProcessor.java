@@ -1,5 +1,6 @@
 package ca.jbrains.pos;
 
+import ca.jbrains.pos.TextCommand.EmptyCommand;
 import io.vavr.Function1;
 import io.vavr.control.Either;
 
@@ -7,6 +8,8 @@ import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.Writer;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public final class CommandProcessor {
@@ -26,14 +29,24 @@ public final class CommandProcessor {
         io.vavr.collection.Stream.ofAll(textInputAsLines)
                 .map(parseTextCommand.andThen(
                         textCommandParsingResult -> textCommandParsingResult.fold(
-                                parsingFailure -> handleTextCommandParsingFailure(parsingFailure),
+                                CommandProcessor::handleTextCommandParsingFailureByWarningOnEmptyCommand,
                                 commandInterpreter::interpretCommand)
                 ))
                 .forEach(out::println);
     }
 
-    // SMELL Assumes that all parsing failures are "Empty Command", which only happens to be true for now.
-    private static String handleTextCommandParsingFailure(ParsingFailure parsingFailure) {
-        return "Empty command: try again.";
+    // REFACTOR Move to its own class and perhaps inject into this one.
+    private static String handleTextCommandParsingFailureByWarningOnEmptyCommand(ParsingFailure parsingFailure) {
+        // REFACTOR Replace with switch with pattern matching, when Java one days lets us.
+        if (parsingFailure instanceof EmptyCommand) {
+            return "Empty command: try again";
+        } else {
+            throw new UnsupportedOperationException("Somehow we have an object of type %s which has implemented %s"
+                    .formatted(
+                            parsingFailure.getClass().getName(),
+                            Arrays.stream(parsingFailure.getClass().getInterfaces()).map(Class::getName).collect(Collectors.joining(", "))
+                    )
+            );
+        }
     }
 }
