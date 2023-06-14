@@ -12,8 +12,7 @@ public class PointOfSaleTerminal {
                         new Catalog(
                                 Map.of("12345", "CAD 7.95",
                                         "23456", "CAD 12.50"))));
-        new CommandProcessor(
-                new WarnOnEmptyCommandInterpreter(commandInterpreter))
+        new CommandProcessor(commandInterpreter)
                 .process(
                         new InputStreamReader(System.in),
                         new OutputStreamWriter(System.out)
