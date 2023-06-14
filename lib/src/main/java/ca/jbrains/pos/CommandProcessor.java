@@ -7,10 +7,10 @@ import java.io.Writer;
 import java.util.stream.Stream;
 
 public final class CommandProcessor {
-    private final WarnOnEmptyCommandInterpreter commandInterpreter;
+    private final CommandInterpreter commandInterpreter;
 
     public CommandProcessor(CommandInterpreter commandInterpreter) {
-        this.commandInterpreter = new WarnOnEmptyCommandInterpreter(commandInterpreter);
+        this.commandInterpreter = commandInterpreter;
     }
 
     public void process(Reader textInput, Writer canvas) {
@@ -21,7 +21,7 @@ public final class CommandProcessor {
         // REFACTOR Perhaps this is nicer with Either: map(parseTextCommand).bimap(handleInvalidCommand, interpretCommand)
         final Stream<String> outputLines = textInputAsLines
                 .map(TextCommand::parseTextCommand)
-                .map(commandInterpreter::interpretCommandWarningOnEmptyCommands);
+                .map(commandInterpreter::interpretCommand);
 
         outputLines.forEachOrdered(out::println);
     }

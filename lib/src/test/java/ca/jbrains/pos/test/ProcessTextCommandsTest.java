@@ -24,10 +24,11 @@ public class ProcessTextCommandsTest {
         final StringReader simulatedTextInput = new StringReader("command 1\n");
         final StringWriter canvas = new StringWriter();
 
-        new CommandProcessor(new LightweightCommandInterpreter(
+        LightweightCommandInterpreter commandInterpreter = new LightweightCommandInterpreter(
                 Map.of("command 1", "output from command 1",
                         "command 2", "output from command 2",
-                        "command 3", "output from command 3"))).process(simulatedTextInput, canvas);
+                        "command 3", "output from command 3"));
+        new CommandProcessor(commandInterpreter).process(simulatedTextInput, canvas);
 
         Assertions.assertEquals(List.of("output from command 1"), lines(canvas.toString()));
     }
@@ -37,10 +38,11 @@ public class ProcessTextCommandsTest {
         final StringReader simulatedTextInput = new StringReader("");
         final StringWriter canvas = new StringWriter();
 
-        new CommandProcessor(new LightweightCommandInterpreter(
+        final LightweightCommandInterpreter commandInterpreter = new LightweightCommandInterpreter(
                 Map.of("command 1", "output from command 1",
                         "command 2", "output from command 2",
-                        "command 3", "output from command 3"))).process(simulatedTextInput, canvas);
+                        "command 3", "output from command 3"));
+        new CommandProcessor(commandInterpreter).process(simulatedTextInput, canvas);
 
         Assertions.assertEquals(Collections.emptyList(), lines(canvas.toString()));
     }
@@ -50,10 +52,11 @@ public class ProcessTextCommandsTest {
         final StringReader simulatedTextInput = new StringReader("command 1\ncommand 2\ncommand 3\n");
         final StringWriter canvas = new StringWriter();
 
-        new CommandProcessor(new LightweightCommandInterpreter(
+        final LightweightCommandInterpreter commandInterpreter = new LightweightCommandInterpreter(
                 Map.of("command 1", "output from command 1",
                         "command 2", "output from command 2",
-                        "command 3", "output from command 3"))).process(simulatedTextInput, canvas);
+                        "command 3", "output from command 3"));
+        new CommandProcessor(commandInterpreter).process(simulatedTextInput, canvas);
 
         Assertions.assertEquals(
                 List.of(
