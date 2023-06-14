@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.Writer;
-import java.util.Objects;
-import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public final class CommandProcessor {
