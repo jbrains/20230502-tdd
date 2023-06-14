@@ -1,7 +1,7 @@
 package ca.jbrains.pos;
 
 public record TextCommand(String text) {
-    public static TextCommand parseTextCommand(String commandAsText) {
+    public static TextCommand parseTextCommand_Legacy(String commandAsText) {
         String sanitizedCommandAsText = commandAsText.trim();
         return sanitizedCommandAsText.isEmpty() ? null : new TextCommand(sanitizedCommandAsText);
     }

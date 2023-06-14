@@ -9,20 +9,20 @@ public class ParseTextCommandTest {
     void trimWhitespace() {
         Assertions.assertEquals(
                 new TextCommand("12345"),
-                TextCommand.parseTextCommand("\t  12345  \t   "));
+                TextCommand.parseTextCommand_Legacy("\t  12345  \t   "));
     }
 
     @Test
     void empty() {
         Assertions.assertEquals(
                 null,
-                TextCommand.parseTextCommand(""));
+                TextCommand.parseTextCommand_Legacy(""));
     }
 
     @Test
     void emptyAfterTrimming() {
         Assertions.assertEquals(
                 null,
-                TextCommand.parseTextCommand("\t"));
+                TextCommand.parseTextCommand_Legacy("\t"));
     }
 }

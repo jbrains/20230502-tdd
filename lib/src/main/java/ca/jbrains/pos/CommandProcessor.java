@@ -20,7 +20,7 @@ public final class CommandProcessor {
 
         // REFACTOR Perhaps this is nicer with Either: map(parseTextCommand).bimap(handleInvalidCommand, interpretCommand)
         final Stream<String> outputLines = textInputAsLines
-                .map(TextCommand::parseTextCommand)
+                .map(TextCommand::parseTextCommand_Legacy)
                 .map(commandInterpreter::interpretCommand);
 
         outputLines.forEachOrdered(out::println);
