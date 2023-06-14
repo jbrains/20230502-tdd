@@ -25,6 +25,6 @@ public final class CommandProcessor {
                         ? "Empty command: please try again."
                         : commandInterpreter.interpretCommand(maybeTextCommand));
 
-        outputLines.forEachOrdered(outputLine -> out.println(outputLine));
+        outputLines.forEachOrdered(out::println);
     }
 }
