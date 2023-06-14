@@ -7,7 +7,6 @@ import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.Writer;
-import java.util.function.Function;
 import java.util.stream.Stream;
 
 public final class CommandProcessor {
@@ -27,9 +26,14 @@ public final class CommandProcessor {
         io.vavr.collection.Stream.ofAll(textInputAsLines)
                 .map(parseTextCommand.andThen(
                         textCommandParsingResult -> textCommandParsingResult.fold(
-                                parsingFailure -> "Empty command: try again.",
+                                parsingFailure -> handleTextCommandParsingFailure(parsingFailure),
                                 commandInterpreter::interpretCommand)
                 ))
                 .forEach(out::println);
+    }
+
+    // SMELL Assumes that all parsing failures are "Empty Command", which only happens to be true for now.
+    private static String handleTextCommandParsingFailure(ParsingFailure parsingFailure) {
+        return "Empty command: try again.";
     }
 }
