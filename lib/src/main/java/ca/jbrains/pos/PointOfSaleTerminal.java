@@ -6,13 +6,14 @@ import java.util.Map;
 
 public class PointOfSaleTerminal {
     public static void main(String[] args) {
+        final PointOfSaleCommandInterpreter commandInterpreter = new PointOfSaleCommandInterpreter(
+                new Sale(
+                        new EnglishLanguageMessageFormat(),
+                        new Catalog(
+                                Map.of("12345", "CAD 7.95",
+                                        "23456", "CAD 12.50"))));
         new CommandProcessor(
-                new PointOfSaleCommandInterpreter(
-                        new Sale(
-                                new EnglishLanguageMessageFormat(),
-                                new Catalog(
-                                        Map.of("12345", "CAD 7.95",
-                                                "23456", "CAD 12.50")))))
+                new WarnOnEmptyCommandInterpreter(commandInterpreter))
                 .process(
                         new InputStreamReader(System.in),
                         new OutputStreamWriter(System.out)
