@@ -18,14 +18,13 @@ public final class CommandProcessor {
 
         final Stream<String> textInputAsLines = new BufferedReader(textInput).lines();
 
-        io.vavr.collection.Stream<String> outputLines = io.vavr.collection.Stream.ofAll(textInputAsLines)
+        io.vavr.collection.Stream.ofAll(textInputAsLines)
                 .map(TextCommand::parseTextCommand)
                 .map(
                         textCommandParsingResult -> textCommandParsingResult.fold(
                                 parsingFailure -> "Empty command: try again.",
                                 commandInterpreter::interpretCommand)
-                );
-
-        outputLines.forEach(out::println);
+                )
+                .forEach(out::println);
     }
 }
