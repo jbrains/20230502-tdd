@@ -1,5 +1,8 @@
 package ca.jbrains.pos;
 
+import io.vavr.Function1;
+import io.vavr.control.Either;
+
 import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.io.Reader;
@@ -18,13 +21,14 @@ public final class CommandProcessor {
 
         final Stream<String> textInputAsLines = new BufferedReader(textInput).lines();
 
+        Function1<String, Either<TextCommand.ParsingFailure, TextCommand>> parseTextCommand = TextCommand::parseTextCommand;
+
         io.vavr.collection.Stream.ofAll(textInputAsLines)
-                .map(TextCommand::parseTextCommand)
-                .map(
+                .map(parseTextCommand.andThen(
                         textCommandParsingResult -> textCommandParsingResult.fold(
                                 parsingFailure -> "Empty command: try again.",
                                 commandInterpreter::interpretCommand)
-                )
+                ))
                 .forEach(out::println);
     }
 }
