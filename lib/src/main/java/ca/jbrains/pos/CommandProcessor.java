@@ -19,10 +19,12 @@ public final class CommandProcessor {
         final Stream<String> textInputAsLines = new BufferedReader(textInput).lines();
 
         // REFACTOR Perhaps this is nicer with Either: map(parseTextCommand).bimap(handleInvalidCommand, interpretCommand)
-        final Stream<String> outputLines = textInputAsLines
-                .map(TextCommand::parseTextCommand_Legacy)
-                .map(commandInterpreter::interpretCommand);
+        io.vavr.collection.Stream<String> outputLines = io.vavr.collection.Stream.ofAll(
+                textInputAsLines
+                        .map(TextCommand::parseTextCommand_Legacy)
+                        .map(commandInterpreter::interpretCommand)
+        );
 
-        outputLines.forEachOrdered(out::println);
+        outputLines.toJavaStream().forEachOrdered(out::println);
     }
 }
